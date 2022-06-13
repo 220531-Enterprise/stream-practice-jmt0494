@@ -53,9 +53,11 @@ public class StreamTest {
         ****************************************************************************/
 
         
-        // Code your Solution here
+        Optional<Student> possibleBob = students.stream()
+        		.filter(s -> s.getName().equals("Bob"))
+        		.findFirst();
 
-        
+        System.out.println(possibleBob.isPresent() ? possibleBob.get().getName() : "No Student Found");
         
         
         /***************************************************************************
@@ -66,7 +68,11 @@ public class StreamTest {
         ****************************************************************************/
 
         
-        // Code your Solution here
+        Optional<Student> s1 = students.stream()
+        		.filter(s -> s.getAddress().getZipcode().equals("1235"))
+        		.findFirst();
+        
+        System.out.println(s1.isPresent() ? s1.get().getName() : "No Student Found");
 
         
         
@@ -78,7 +84,13 @@ public class StreamTest {
         *****************************************************************************/
 
         
-        // Code your Solution here
+        List<Student> studentsWith3333 = students.stream()
+        		.filter(s -> s.getMobileNumbers()
+        				.stream()
+        				.anyMatch(num -> num.getNumber().equals("3333")))
+        		.collect(Collectors.toList());
+        
+        studentsWith3333.forEach(s -> System.out.println(s.getName()));
 
         
         
@@ -90,10 +102,18 @@ public class StreamTest {
          ***************************************************************************/
 
         
-        // Code your Solution here
+        List<Student> studentsWith123 = students.stream()
+        		.filter(s -> s.getMobileNumbers()
+        				.stream()
+        				.anyMatch(num -> {
+        					if (num.getNumber().equals("1233") || num.getNumber().equals("1234")) {
+        						return true;
+        					}
+        					return false;
+        				}))
+        		.collect(Collectors.toList());
         
-        
-        
+        studentsWith123.forEach(s -> System.out.println(s.getName()));
         
         
         /***************************************************************************
@@ -116,9 +136,11 @@ public class StreamTest {
         List<TempStudent> tmpStudents = Arrays.asList(tmpStud1, tmpStud2);
         
         // Code your Solution here, don't touch the code above
- 
-
         
+        List<Student> studentList = tmpStudents.stream()
+        		.map(ts -> new Student(ts.name, ts.age, ts.address, ts.mobileNumbers))
+        		.collect(Collectors.toList());
+        System.out.println(studentList);
         
         
  
@@ -129,8 +151,10 @@ public class StreamTest {
         ****************************************************************************/
 
         
-        // Code your Solution here
-
+        List<String> studentNames = studentList.stream()
+        		.map(s -> s.getName())
+        		.collect(Collectors.toList());
+        System.out.println(studentNames);
         
         
         
@@ -141,7 +165,9 @@ public class StreamTest {
         ****************************************************************************/
 
         
-        // Code your Solution here
+        String name = studentNames.stream()
+        		.collect(Collectors.joining(" "));
+        System.out.println(name);
 
         
         
@@ -156,8 +182,11 @@ public class StreamTest {
  
         // Code your Solution here, don't touch the code above
 
+        List<String> nameListUpperCase = nameList.stream()
+        		.map(n -> n.toUpperCase())
+        		.collect(Collectors.toList());
         
-        
+        System.out.println(nameListUpperCase);
         
         
         /****************************************************************************
@@ -167,11 +196,10 @@ public class StreamTest {
         List<String> namesList =
             Arrays.asList("Bob", "Danny", "Alice", "Eddie", "Cathy");
  
-        // Code your Solution here, don't touch the code above
-
-
-        
-        
+        List<String> namesListSorted = namesList.stream()
+        		.sorted()
+        		.collect(Collectors.toList());
+        System.out.println(namesListSorted);
  
     }
     
