@@ -97,7 +97,7 @@ public class StreamTest {
         
         
         /***************************************************************************
-         (4) Get all student having mobile number "1233" and "1234" and print their
+         (4) Get all student having both mobile numbers "1233" and "1234" and print their
              names to the console.
          ***************************************************************************/
 
@@ -105,12 +105,10 @@ public class StreamTest {
         List<Student> studentsWith123 = students.stream()
         		.filter(s -> s.getMobileNumbers()
         				.stream()
-        				.anyMatch(num -> {
-        					if (num.getNumber().equals("1233") || num.getNumber().equals("1234")) {
-        						return true;
-        					}
-        					return false;
-        				}))
+        				.anyMatch(num -> num.getNumber().equals("1233")))
+        		.filter(s -> s.getMobileNumbers() 
+        				.stream()
+        				.anyMatch(num -> num.getNumber().equals("1234")))
         		.collect(Collectors.toList());
         
         studentsWith123.forEach(s -> System.out.println(s.getName()));
